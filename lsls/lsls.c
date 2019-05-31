@@ -10,6 +10,7 @@
 int main(int argc, char **argv)
 {
   // Initialize variables
+  int i;
   DIR *dir;
   struct dirent *dp;
   struct stat buf;
@@ -17,13 +18,12 @@ int main(int argc, char **argv)
   // Parse command line
 
   // Open directory
-  if ((dir = opendir(".")) == NULL) {
+  if ((dir = opendir(argv[1])) == NULL) {
     perror ("Cannot open .");
     exit (1);
   }
 
   // Repeatly read and print entries
-
   while ((dp = readdir(dir)) != NULL) {
     // print out file sizes
     stat(dp->d_name, &buf);
@@ -32,7 +32,6 @@ int main(int argc, char **argv)
     // print out file names
     printf("%s\n", dp->d_name);
   }
-  
 
   // Close directory
   closedir(dir);
