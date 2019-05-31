@@ -23,9 +23,26 @@ int main(int argc, char **argv)
   // Repeatly read and print entries  
   while ((dp = readdir(dir)) != NULL) {
     
-    // print out file sizes
+    // write file information to buffer
     stat(dp->d_name, &buf);
-    printf("%10lld  ", buf.st_size);
+
+    // check if its a file, directory or something else
+    if (S_ISREG(buf.st_mode)) {
+
+      // print out file sizes
+      printf("%10lld  ", buf.st_size);
+
+    } else if (S_ISDIR(buf.st_mode)) {
+      
+      // Print <DIR> instead of file size
+      printf("%12s", "<DIR>  ");
+      
+    /**
+    * @TODO What goes in others?
+    */
+    } else {
+      printf("Something else");
+    }
 
     // print out file names
     printf("%s\n", dp->d_name);
